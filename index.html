@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.appcache">
 <head>
 <meta charset="utf-8">
-<title>Atari Sherwan</title>
-<script>
-    location.replace("jb.html" + location.search);
-</script>
+<title>Atari Sherwan - PS4 Host</title>
+<style>
+  body {
+      background-color: #0b0f19;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 30vh;
+      margin: 0;
+  }
+  h2 { font-size: 24px; margin-bottom: 10px; }
+  p { color: #8b95a3; font-size: 14px; }
+</style>
+<script src="int64.js"></script>
+<script src="rop.js"></script>
+<script src="js.js"></script>
+<script src="userland.js"></script>
 </head>
-<body style="background:#0b0f19; color:#fff; text-align:center; padding-top:20vh; font-family:sans-serif;">
-    <h2>Loading Jailbreak...</h2>
+<body>
+    <h2>ئـاتاری شێروان - Sherwan Center</h2>
+    <p id="msgs">Loading Jailbreak Files...</p>
+    <script>
+        setTimeout(function() {
+            document.getElementById("msgs").innerHTML = "Ready to exploit. Open via PS4 Browser.";
+        }, 1500);
+    </script>
 </body>
 </html>
