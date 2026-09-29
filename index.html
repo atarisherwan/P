@@ -12,21 +12,26 @@
       padding-top: 30vh;
       margin: 0;
   }
-  h2 { font-size: 24px; margin-bottom: 10px; }
+  h2 { font-size: 24px; margin-bottom: 10px; color: #fff; }
   p { color: #8b95a3; font-size: 14px; }
 </style>
+<script src="core.js"></script>
 <script src="int64.js"></script>
-<script src="rop.js"></script>
-<script src="js.js"></script>
-<script src="userland.js"></script>
+<script src="mem.js"></script>
+<script src="ps4_offsets.js"></script>
+<script src="jb.js"></script>
 </head>
 <body>
     <h2>ئـاتاری شێروان - Sherwan Center</h2>
     <p id="msgs">Loading Jailbreak Files...</p>
     <script>
         setTimeout(function() {
-            document.getElementById("msgs").innerHTML = "Ready to exploit. Open via PS4 Browser.";
-        }, 1500);
+            if(typeof run_jb === 'function') {
+                run_jb();
+            } else {
+                document.getElementById("msgs").innerHTML = "Ready. Please open via PS4 Browser.";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
