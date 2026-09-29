@@ -14,17 +14,29 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #0b0f19;
+            /* وێنەی باکگراوندی دووکانەکەت */
+            background-image: url('image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
             color: #fff;
             font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            
+            /* تۆخکردنەوەی پاشبنەما بۆ ئەوەی دەقەکان بە جوانی دیار بن */
+            background-color: rgba(11, 15, 25, 0.75);
+            background-blend-mode: overlay;
         }
         #msgs {
-            font-size: 18px;
-            color: #8b95a3;
+            font-size: 20px;
+            color: #00d2ff;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -37,6 +49,27 @@
     <script src="ps4_offsets.js"></script>
     <script src="jb.js"></script>
     <script>
+        // فەنکشنی سەرکەوتنی جیلبرێک و ناردنی GoldHEN
+        function all_done() {
+            document.getElementById("msgs").innerText = "Jailbreak Successful! Loading GoldHEN...";
+            setTimeout(function() {
+                read_payload();
+            }, 500);
+        }
+
+        function read_payload() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'goldhen.bin', true);
+            xhr.binaryType = "arraybuffer";
+            xhr.onload = function (e) {
+                var payload = xhr.response;
+                send_payload(window.location.hostname, 9020, payload, function() {
+                    document.getElementById("msgs").innerText = "GoldHEN Activated Successfully!";
+                });
+            };
+            xhr.send();
+        }
+
         window.addEventListener('load', function () {
             setTimeout(function () {
                 if (typeof run_jb === 'function') {
