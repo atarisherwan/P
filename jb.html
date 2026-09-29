@@ -3,27 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jb Host</title>
+    <title>Atari Sherwan - Jailbreak</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-        }
-
-        body {
-            /* تەنها باکگراوندی ڕەش/تاریک دەبێت بێ هیچ لۆگۆیەک */
             background-color: #0b0f19;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #msgs {
+            font-size: 18px;
+            color: #8b95a3;
         }
     </style>
 </head>
 <body>
+    <div id="msgs">Initializing Exploit...</div>
 
+    <script src="core.js"></script>
+    <script src="int64.js"></script>
+    <script src="mem.js"></script>
+    <script src="ps4_offsets.js"></script>
+    <script src="jb.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                if (typeof run_jb === 'function') {
+                    run_jb();
+                } else {
+                    document.getElementById("msgs").innerText = "Ready. Tap to run jailbreak.";
+                }
+            }, 500);
+        });
+    </script>
 </body>
 </html>
