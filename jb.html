@@ -5,43 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atari Sherwan - Jailbreak</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             overflow: hidden;
-            /* وێنەی باکگراوندی دووکانەکەت */
             background-image: url('image.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            
             color: #fff;
             font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            
-            /* تۆخکردنەوەی پاشبنەما بۆ ئەوەی دەقەکان بە جوانی دیار بن */
-            background-color: rgba(11, 15, 25, 0.75);
+            background-color: rgba(11, 15, 25, 0.8);
             background-blend-mode: overlay;
         }
         #msgs {
-            font-size: 20px;
+            font-size: 22px;
             color: #00d2ff;
             font-weight: bold;
+            margin-bottom: 20px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
+        .btn {
+            padding: 15px 35px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .btn:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
-    <div id="msgs">Initializing Exploit...</div>
+    <div id="msgs">Ready to Jailbreak... Click Start</div>
+    <button class="btn" id="start-btn" onclick="startJailbreak()">دەستپێکردنی جیلبرێک</button>
 
     <script src="core.js"></script>
     <script src="int64.js"></script>
@@ -49,36 +53,38 @@
     <script src="ps4_offsets.js"></script>
     <script src="jb.js"></script>
     <script>
-        // فەنکشنی سەرکەوتنی جیلبرێک و ناردنی GoldHEN
-        function all_done() {
-            document.getElementById("msgs").innerText = "Jailbreak Successful! Loading GoldHEN...";
-            setTimeout(function() {
-                read_payload();
-            }, 500);
-        }
-
-        function read_payload() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'goldhen.bin', true);
-            xhr.binaryType = "arraybuffer";
-            xhr.onload = function (e) {
-                var payload = xhr.response;
-                send_payload(window.location.hostname, 9020, payload, function() {
-                    document.getElementById("msgs").innerText = "GoldHEN Activated Successfully!";
-                });
-            };
-            xhr.send();
-        }
-
-        window.addEventListener('load', function () {
+        function startJailbreak() {
+            document.getElementById("start-btn").style.display = "none";
+            document.getElementById("msgs").innerText = "Running Exploit, Please Wait...";
             setTimeout(function () {
                 if (typeof run_jb === 'function') {
                     run_jb();
                 } else {
-                    document.getElementById("msgs").innerText = "Ready. Tap to run jailbreak.";
+                    document.getElementById("msgs").innerText = "Error: run_jb function not found!";
                 }
             }, 500);
-        });
+        }
+
+        // ئەم فەنکشنە لەلایەن jb.jsـەوە بانگ دەکرێت کاتێک سەرکەوتوو دەبێت
+        function all_done() {
+            document.getElementById("msgs").innerText = "Jailbreak Success! Loading GoldHEN...";
+            setTimeout(function() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'goldhen.bin', true);
+                xhr.binaryType = "arraybuffer";
+                xhr.onload = function () {
+                    var payload = xhr.response;
+                    if(typeof send_payload === "function") {
+                        send_payload(window.location.hostname, 9020, payload, function() {
+                            document.getElementById("msgs").innerText = "GoldHEN Activated Successfully!";
+                        });
+                    } else {
+                        document.getElementById("msgs").innerText = "GoldHEN Loaded (Check System Settings)";
+                    }
+                };
+                xhr.send();
+            }, 1000);
+        }
     </script>
 </body>
 </html>
