@@ -21,11 +21,11 @@
       background-blend-mode: overlay;
   }
   #wrap { 
-      padding-top: 30vh;
+      padding-top: 25vh;
   }
   h2 { 
-      font-size: 30px; 
-      margin-bottom: 10px; 
+      font-size: 32px; 
+      margin-bottom: 5px; 
       color: #fff; 
       text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
   }
@@ -60,7 +60,8 @@
 </head>
 <body>
 <div id="wrap">
-  <h2>Atari Sherwan - Sherwan Center</h2>
+  <h2>Atari Sherwan</h2>
+  <div style="font-size: 13px; color: #00d2ff; margin-bottom: 25px; letter-spacing: 1.5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9);">TikTok: @Atari.Sherwan</div>
   <div id="state">Checking Firmware...</div>
   <div id="det"></div>
   <div id="cache"></div>
@@ -76,7 +77,18 @@
     function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
     
     var params = new URLSearchParams(location.search);
-    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+    
+    // لیستی سەرجەم فێرژنە پشتگیریکراوەکان
+    var SUPPORTED = { 
+        1150: 1, 
+        1200: 1, 
+        1250: 1, 
+        1300: 1, 
+        1302: 1, 
+        1304: 1, 
+        1350: 1, 
+        1352: 1 
+    };
 
     var key = null, fwnum = null;
     var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
