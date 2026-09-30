@@ -42,7 +42,6 @@
         text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
       }
 
-      /* running: a spinner under the brand. */
       #spin {
         position: fixed;
         top: calc(50% + 40px);
@@ -90,6 +89,7 @@
       }
       body.fail #msg {
         display: block;
+        color: #d08a7f;
       }
       body.done #msg {
         display: block;
@@ -136,7 +136,7 @@
       <div id="tiktok-sub">TikTok/@Atari.Sherwan</div>
     </div>
     <div id="spin"></div>
-    <div id="msg">Restart your console</div>
+    <div id="msg">Loading Jailbreak...</div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
@@ -150,33 +150,32 @@
       var fwNum = parseFloat(fwVersion);
 
       function onScriptError() {
-          document.getElementById("msg").textContent = "Content not Found! - Reload Page";
+          document.getElementById("msg").textContent = "Script Error! Check File Paths";
           document.body.className = "fail";
       }
 
-      // تەنها دیاریکردن و پشکنینی فێرژنە گرنگەکان (وەک 9، 11 و 12)
       if (isPS4) {
           var script = document.createElement('script');
           script.onerror = onScriptError;
 
-          if (fwNum >= 9.00 && fwNum <= 9.04) {
-              script.src = "900.js";
-          } 
-          else if (fwNum >= 10.00 && fwNum <= 11.02) {
-              script.src = "css/main.js"; // بۆ فێرژنی 11
-              script.onload = function () {
-                  setTimeout(function () { if (typeof doJb === 'function') doJb(); }, 500);
-              };
-          } 
-          else if (fwNum >= 11.50 && fwNum <= 12.02) {
-              script.type = 'module';
-              script.src = "slopkit/chain_lapse.js"; // بۆ فێرژنی 12
-          } 
-          else {
-              script.src = "jb.js?v=19"; // بۆ فێرژنەکانی تر وەک پاڵپشتی گشتی
-          }
+          // لێرەدا دەتوانیت ڕاستەوخۆ فایلە سەرەکییەکەی خۆت بکەیتە سەرچاوە
+          script.src = "jb.js?v=19"; 
           
+          script.onload = function () {
+              setTimeout(function () { 
+                  if (typeof doJb === 'function') {
+                      doJb(); 
+                  } else {
+                      document.getElementById("msg").textContent = "Jailbreak Ready";
+                      document.body.className = "done";
+                  }
+              }, 500);
+          };
+
           document.head.appendChild(script);
+      } else {
+          document.getElementById("msg").textContent = "Not a PS4 Browser";
+          document.body.className = "fail";
       }
     </script>
   </body>
