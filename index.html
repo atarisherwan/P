@@ -39,35 +39,51 @@
 </head>
 <body>
     <h2>ئـاتاری شێروان - Sherwan Center</h2>
-    <p id="msgs">Loading Jailbreak Files...</p>
+    <p id="msgs">Initializing 13.52 Exploit...</p>
     <script>
         function all_done() {
-            document.getElementById("msgs").innerHTML = "Jailbreak Successful! Loading GoldHEN...";
-            setTimeout(function() {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'goldhen.bin', true);
-                xhr.binaryType = "arraybuffer";
-                xhr.onload = function () {
-                    var payload = xhr.response;
+            document.getElementById("msgs").innerHTML = "Exploit Succeeded! Sending GoldHEN...";
+            
+            var req = new XMLHttpRequest();
+            req.open('GET', 'goldhen.bin', true);
+            req.responseType = "arraybuffer";
+            
+            req.onload = function () {
+                if (req.status === 200) {
+                    var blob = req.response;
+                    var exploiter = new Uint8Array(blob);
+                    
+                    // ناردنی پەیلوود بۆ پۆرتی داواکراوی GoldHEN
                     if (typeof send_payload === "function") {
-                        send_payload(window.location.hostname, 9020, payload, function() {
+                        send_payload("127.0.0.1", 9020, exploiter, function() {
                             document.getElementById("msgs").innerHTML = "GoldHEN Activated Successfully!";
                         });
                     } else {
-                        document.getElementById("msgs").innerHTML = "GoldHEN Loaded Successfully!";
+                        // ئەگەر فەنکشنی send_payload لە جەی ئێسەکەی raw13g دا بە ناوی تر بێت
+                        var sock = document.createElement("script");
+                        sock.src = "payload.js";
+                        document.body.appendChild(sock);
+                        document.getElementById("msgs").innerHTML = "GoldHEN Loaded via Payload Loader!";
                     }
-                };
-                xhr.send();
-            }, 1000);
+                } else {
+                    document.getElementById("msgs").innerHTML = "Error: Failed to load goldhen.bin payload!";
+                }
+            };
+            
+            req.onerror = function() {
+                document.getElementById("msgs").innerHTML = "Network Error loading payload file.";
+            };
+            
+            req.send();
         }
 
         setTimeout(function() {
             if(typeof run_jb === 'function') {
                 run_jb();
             } else {
-                document.getElementById("msgs").innerHTML = "Error loading exploit scripts!";
+                document.getElementById("msgs").innerHTML = "Error: jb.js script not loaded properly!";
             }
-        }, 1000);
+        }, 1200);
     </script>
 </body>
 </html>
