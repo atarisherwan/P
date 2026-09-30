@@ -4,14 +4,14 @@ const ASSETS = [
   './index.html',
   './jb.html',
   './jb.js',
+  './core.js',
+  './int64.js',
+  './mem.js',
   './ps4_offsets.js',
+  './rpc_worker.js',
   './image.jpg',
   './goldhen.bin',
-  './payload.bin',
-  './payload2.bin',
-  './1100.bin',
-  './1350.bin',
-  './1352.bin'
+  './payload2.bin'
 ];
 
 self.addEventListener('install', (event) => {
