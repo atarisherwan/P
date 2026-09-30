@@ -22,30 +22,30 @@
       }
       #brand {
         text-align: center;
-        padding: 12px 10px;
-        background: rgba(14, 17, 22, 0.9);
-        border-bottom: 1px solid #1e2732;
+        padding: 25px 10px 15px 10px;
+        background: transparent;
       }
       #brand b {
-        font-size: 20px;
+        font-size: 26px;
         font-weight: 700;
         letter-spacing: 0.14em;
-        color: #e6ebf2;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
         display: block;
       }
       #tiktok-sub {
-        font-size: 13px;
+        font-size: 14px;
         color: #00d2ff;
-        margin-top: 4px;
-        letter-spacing: 1px;
+        margin-top: 6px;
+        letter-spacing: 1.5px;
         font-weight: 600;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
       }
 
-      /* running: a spinner under the brand. jb.js sets body.done / body.fail / body.log. */
+      /* running: a spinner under the brand. */
       #spin {
         position: fixed;
-        top: calc(50% + 20px);
+        top: calc(50% + 40px);
         left: 50%;
         width: 46px;
         height: 46px;
@@ -62,7 +62,7 @@
       }
       #msg {
         position: fixed;
-        top: 50%;
+        top: calc(50% - 10px);
         left: 0;
         right: 0;
         transform: translateY(-50%);
@@ -98,7 +98,6 @@
         letter-spacing: 2px;
       }
 
-      /* ?log=1 -- the full step log, styled like the landing. */
       body.log #spin,
       body.log #msg {
         display: none;
@@ -123,24 +122,12 @@
         height: calc(100vh - 141px);
         overflow-y: auto;
       }
-      .ok {
-        color: #7fd0a0;
-      }
-      .bad {
-        color: #d08a7f;
-      }
-      .warn {
-        color: #d8c07f;
-      }
-      .safe {
-        color: #7fd0a0;
-      }
-      .danger {
-        color: #d08a7f;
-      }
-      code {
-        color: #9fb3d0;
-      }
+      .ok { color: #7fd0a0; }
+      .bad { color: #d08a7f; }
+      .warn { color: #d8c07f; }
+      .safe { color: #7fd0a0; }
+      .danger { color: #d08a7f; }
+      code { color: #9fb3d0; }
     </style>
   </head>
   <body>
@@ -154,8 +141,43 @@
       <div id="state"></div>
       <div id="out"></div>
     </div>
-    <script type="module">
-      import "./jb.js?v=19";
+
+    <script>
+      var uaFull = navigator.userAgent;
+      var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
+      var isPS4 = match !== null;
+      var fwVersion = isPS4 ? match[1] : "Unknown";
+      var fwNum = parseFloat(fwVersion);
+
+      function onScriptError() {
+          document.getElementById("msg").textContent = "Content not Found! - Reload Page";
+          document.body.className = "fail";
+      }
+
+      // دیاریکردن و بارکردنی سکریپتی گونجاو بەپێی فێرژن لەناو jb.html دا
+      if (isPS4) {
+          var script = document.createElement('script');
+          script.onerror = onScriptError;
+
+          if (fwNum >= 10.00 && fwNum <= 11.02) {
+              script.src = "css/main.js";
+              script.onload = function () {
+                  setTimeout(function () { if (typeof doJb === 'function') doJb(); }, 500);
+              };
+          } else if (fwNum >= 11.50 && fwNum <= 12.02) {
+              script.type = 'module';
+              script.src = "slopkit/chain_lapse.js";
+          } else if (fwNum >= 12.50 && fwNum <= 13.00) {
+              script.type = 'module';
+              script.src = "slopkit/chain_poops.js";
+          } else if (fwNum >= 13.02 && fwNum <= 13.52) {
+              script.type = 'module';
+              script.src = "slopkit/jb.js?v=19";
+          } else {
+              script.src = "jb.js?v=19"; // بۆ فێرژنەکانی تر وەک پشتیوانی گشتی
+          }
+          document.head.appendChild(script);
+      }
     </script>
   </body>
 </html>
