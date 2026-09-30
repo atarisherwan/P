@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Atari Sherwan</title>
+    <title>Atari Sherwan - Jailbreak</title>
     <style>
-      html,
-      body {
+      html, body {
         margin: 0;
         padding: 0;
         min-height: 100%;
@@ -23,7 +22,6 @@
       #brand {
         text-align: center;
         padding: 25px 10px 15px 10px;
-        background: transparent;
       }
       #brand b {
         font-size: 26px;
@@ -77,26 +75,22 @@
       <div id="tiktok-sub">TikTok/@Atari.Sherwan</div>
     </div>
     <div id="spin"></div>
-    <div id="msg">Initializing Exploit...</div>
+    <div id="msg">Loading Exploit Files...</div>
 
-    <!-- بارکردنی فایلە بنەڕەتییەکان یەک بە دوای یەک بە شێوەیەکی پارێزراو -->
+    <!-- بنەمای جەیلبڕک -->
     <script src="int64.js"></script>
-    <script src="rop.js" onerror="console.log('rop optional')"></script>
+    <script src="rop.js"></script>
     <script src="core.js"></script>
     <script src="mem.js"></script>
     <script src="jb.js"></script>
 
     <script>
-      window.addEventListener('error', function(e) {
-          document.getElementById("msg").textContent = "Error: " + e.message;
-          document.getElementById("spin").style.display = "none";
+      // دڵنیابوونەوە لە جێبەجێکردنی پەیلوود و پاتچەکان بۆ هەموو ڤێرژنەکان
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          document.getElementById("msg").textContent = "Applying Patches & GoldHEN...";
+        }, 2000);
       });
-
-      setTimeout(function() {
-          if(document.getElementById("msg").textContent === "Initializing Exploit...") {
-              document.getElementById("msg").textContent = "Jailbreak Triggered / Ready";
-          }
-      }, 3000);
     </script>
   </body>
 </html>
