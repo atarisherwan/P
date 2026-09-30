@@ -136,47 +136,15 @@
       <div id="tiktok-sub">TikTok/@Atari.Sherwan</div>
     </div>
     <div id="spin"></div>
-    <div id="msg">Loading Jailbreak...</div>
+    <div id="msg">Jailbreak in progress...</div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
     </div>
 
-    <script>
-      var uaFull = navigator.userAgent;
-      var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
-      var isPS4 = match !== null;
-      var fwVersion = isPS4 ? match[1] : "Unknown";
-      var fwNum = parseFloat(fwVersion);
-
-      function onScriptError() {
-          document.getElementById("msg").textContent = "Script Error! Check File Paths";
-          document.body.className = "fail";
-      }
-
-      if (isPS4) {
-          var script = document.createElement('script');
-          script.onerror = onScriptError;
-
-          // لێرەدا دەتوانیت ڕاستەوخۆ فایلە سەرەکییەکەی خۆت بکەیتە سەرچاوە
-          script.src = "jb.js?v=19"; 
-          
-          script.onload = function () {
-              setTimeout(function () { 
-                  if (typeof doJb === 'function') {
-                      doJb(); 
-                  } else {
-                      document.getElementById("msg").textContent = "Jailbreak Ready";
-                      document.body.className = "done";
-                  }
-              }, 500);
-          };
-
-          document.head.appendChild(script);
-      } else {
-          document.getElementById("msg").textContent = "Not a PS4 Browser";
-          document.body.className = "fail";
-      }
+    <!-- لێرەدا بە شێوازی مۆدیول یان سکریپتی ئاسایی فایلە بنەڕەتییەکەی jb.js بانگ دەکەین تاوەکو پراسێسەکە دەست پێبکات -->
+    <script type="module">
+      import "./jb.js?v=19";
     </script>
   </body>
 </html>
