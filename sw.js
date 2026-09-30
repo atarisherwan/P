@@ -1,8 +1,11 @@
-const CACHE_NAME = 'atari-sherwan-v1';
+const CACHE_NAME = 'atari-sherwan-v2';
 const ASSETS = [
   './',
   './index.html',
+  './jb.html',
+  './jb.js',
   './ps4_offsets.js',
+  './image.jpg',
   './goldhen.bin',
   './payload.bin',
   './payload2.bin',
