@@ -10,28 +10,24 @@
         margin: 0;
         padding: 0;
         min-height: 100%;
-        background: #0b0d10;
+        background-image: url('image.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: rgba(11, 15, 25, 0.85);
+        background-blend-mode: overlay;
         color: #c8ced8;
-        font:
-          15px/1.45 "Segoe UI",
-          system-ui,
-          sans-serif;
+        font: 15px/1.45 "Segoe UI", system-ui, sans-serif;
       }
       #brand {
         text-align: center;
-        padding: 8px 10px;
-        background: #0e1116;
+        padding: 12px 10px;
+        background: rgba(14, 17, 22, 0.9);
         border-bottom: 1px solid #1e2732;
       }
-      #brand img {
-        width: 28px;
-        height: 28px;
-        margin-right: 8px;
-        border-radius: 50%;
-        vertical-align: middle;
-      }
       #brand b {
-        font-size: 15px;
+        font-size: 20px;
         font-weight: 700;
         letter-spacing: 0.14em;
         color: #e6ebf2;
@@ -63,8 +59,11 @@
         right: 0;
         transform: translateY(-50%);
         text-align: center;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 600;
         letter-spacing: 0.5px;
+        color: #00d2ff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
         display: none;
       }
       #wrap {
@@ -108,10 +107,8 @@
       body.log #out {
         display: block;
         white-space: pre-wrap;
-        font:
-          12px/1.45 Consolas,
-          monospace;
-        background: #11151b;
+        font: 12px/1.45 Consolas, monospace;
+        background: rgba(17, 21, 27, 0.9);
         border: 1px solid #1e2732;
         border-radius: 5px;
         padding: 10px 12px;
@@ -140,11 +137,7 @@
   </head>
   <body>
     <div id="brand">
-      <img src="data:image/png;base64,..." alt="" width="28" height="28">
-      alt=""
-        width="28"
-        height="28"
-      /><b>Atari Sherwan</b>
+      <b>Atari Sherwan</b>
     </div>
     <div id="spin"></div>
     <div id="msg">Restart your console</div>
