@@ -5,34 +5,30 @@
 <title>Atari Sherwan - PS4 Host</title>
 <style>
   body {
-      /* لێرەدا وێنەی دووکانەکەت دادەنێیت (دڵنیابە ناوەکەی لەگەڵ وێنەکەت یەکگرتوو بێت) */
       background-image: url('image.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      
       color: #fff;
       font-family: sans-serif;
       text-align: center;
-      padding-top: 30vh;
+      padding-top: 35vh;
       margin: 0;
-      
-      /* بۆ ئەوەی وێنەکە تۆختر بکەینەوە تا دەقەکان باشتر بخوێنرێنەوە */
-      background-color: rgba(11, 15, 25, 0.75);
+      background-color: rgba(11, 15, 25, 0.8);
       background-blend-mode: overlay;
   }
   h2 { 
-      font-size: 28px; 
+      font-size: 30px; 
       margin-bottom: 10px; 
       color: #fff; 
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
   }
   p { 
       color: #00d2ff; 
-      font-size: 16px; 
+      font-size: 18px; 
       font-weight: bold;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
   }
 </style>
 <script src="core.js"></script>
@@ -42,14 +38,34 @@
 <script src="jb.js"></script>
 </head>
 <body>
-    <h2>Atari Sherwan  - Sherwan Center</h2>
+    <h2>ئـاتاری شێروان - Sherwan Center</h2>
     <p id="msgs">Loading Jailbreak Files...</p>
     <script>
+        function all_done() {
+            document.getElementById("msgs").innerHTML = "Jailbreak Successful! Loading GoldHEN...";
+            setTimeout(function() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'goldhen.bin', true);
+                xhr.binaryType = "arraybuffer";
+                xhr.onload = function () {
+                    var payload = xhr.response;
+                    if (typeof send_payload === "function") {
+                        send_payload(window.location.hostname, 9020, payload, function() {
+                            document.getElementById("msgs").innerHTML = "GoldHEN Activated Successfully!";
+                        });
+                    } else {
+                        document.getElementById("msgs").innerHTML = "GoldHEN Loaded Successfully!";
+                    }
+                };
+                xhr.send();
+            }, 1000);
+        }
+
         setTimeout(function() {
             if(typeof run_jb === 'function') {
                 run_jb();
             } else {
-                document.getElementById("msgs").innerHTML = "Ready. Please open via PS4 Browser.";
+                document.getElementById("msgs").innerHTML = "Error loading exploit scripts!";
             }
         }, 1000);
     </script>
