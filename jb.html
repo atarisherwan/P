@@ -136,48 +136,13 @@
       <div id="tiktok-sub">TikTok/@Atari.Sherwan</div>
     </div>
     <div id="spin"></div>
-    <div id="msg">Detecting Firmware & Loading...</div>
+    <div id="msg">Loading Exploit...</div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
     </div>
 
-    <script>
-      var uaFull = navigator.userAgent;
-      var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
-      var isPS4 = match !== null;
-      var fwVersion = isPS4 ? match[1] : "Unknown";
-      var fwNum = parseFloat(fwVersion);
-
-      function onScriptError() {
-          document.getElementById("msg").textContent = "Jailbreak file not found for this version!";
-          document.body.className = "fail";
-      }
-
-      if (isPS4) {
-          var script = document.createElement('script');
-          script.onerror = onScriptError;
-
-          // لێرەدا بەپێی فێرژنەکە، فایلی تایبەت خۆی جێبەجێ دەبێت
-          if (fwNum >= 11.00 && fwNum <= 11.02) {
-              script.src = "jb11.js"; // فایلی تایبەت بە فێرژنی 11
-          } 
-          else if (fwNum >= 11.50 && fwNum <= 12.02) {
-              script.type = 'module';
-              script.src = "jb12.js"; // فایلی تایبەت بە فێرژنی 12
-          } 
-          else if (fwNum >= 13.00 && fwNum <= 13.52) {
-              script.src = "jb13.js"; // فایلی تایبەت بە فێرژنی 13 (ئەگەر هەبێت)
-          } 
-          else {
-              script.src = "jb.js"; // فایلی گشتی وەک پاڵپشتی
-          }
-
-          document.head.appendChild(script);
-      } else {
-          document.getElementById("msg").textContent = "Not a PS4 Browser";
-          document.body.className = "fail";
-      }
-    </script>
+    <!-- بانگکردنی فایلی سەرەکی jb.js کە خۆی بەپێی پێویست فایلەکان و پاتچەکان دەبەسێتەوە -->
+    <script src="jb.js"></script>
   </body>
 </html>
