@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atari Sherwan - Jailbreak</title>
+    <title>Atari Sherwan - PS4 Jailbreak</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
@@ -20,71 +20,64 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            background-color: rgba(11, 15, 25, 0.8);
+            background-color: rgba(11, 15, 25, 0.82);
             background-blend-mode: overlay;
         }
+        h2 { 
+            font-size: 32px; 
+            margin-bottom: 15px; 
+            color: #fff; 
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+        }
         #msgs {
-            font-size: 22px;
+            font-size: 20px;
             color: #00d2ff;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
         }
-        .btn {
-            padding: 15px 35px;
-            font-size: 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .btn:hover { background-color: #0056b3; }
     </style>
-</head>
-<body>
-    <div id="msgs">Ready to Jailbreak... Click Start</div>
-    <button class="btn" id="start-btn" onclick="startJailbreak()">دەستپێکردنی جیلبرێک</button>
-
     <script src="core.js"></script>
     <script src="int64.js"></script>
     <script src="mem.js"></script>
     <script src="ps4_offsets.js"></script>
     <script src="jb.js"></script>
-    <script>
-        function startJailbreak() {
-            document.getElementById("start-btn").style.display = "none";
-            document.getElementById("msgs").innerText = "Running Exploit, Please Wait...";
-            setTimeout(function () {
-                if (typeof run_jb === 'function') {
-                    run_jb();
-                } else {
-                    document.getElementById("msgs").innerText = "Error: run_jb function not found!";
-                }
-            }, 500);
-        }
+</head>
+<body>
+    <h2>ئـاتاری شێروان - Sherwan Center</h2>
+    <div id="msgs">Initializing Jailbreak... Please Wait...</div>
 
-        // ئەم فەنکشنە لەلایەن jb.jsـەوە بانگ دەکرێت کاتێک سەرکەوتوو دەبێت
+    <script>
+        // کاتێک هاکەکە سەرکەوتوو دەبێت، ئەم فەنکشنە بانگ دەکرێت
         function all_done() {
-            document.getElementById("msgs").innerText = "Jailbreak Success! Loading GoldHEN...";
+            document.getElementById("msgs.innerHTML = "Jailbreak Successful! Loading GoldHEN...";
             setTimeout(function() {
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'goldhen.bin', true);
                 xhr.binaryType = "arraybuffer";
                 xhr.onload = function () {
                     var payload = xhr.response;
-                    if(typeof send_payload === "function") {
+                    if (typeof send_payload === "function") {
                         send_payload(window.location.hostname, 9020, payload, function() {
-                            document.getElementById("msgs").innerText = "GoldHEN Activated Successfully!";
+                            document.getElementById("msgs").innerHTML = "GoldHEN Activated Successfully!";
                         });
                     } else {
-                        document.getElementById("msgs").innerText = "GoldHEN Loaded (Check System Settings)";
+                        document.getElementById("msgs").innerHTML = "GoldHEN Loaded! Check your settings.";
                     }
                 };
                 xhr.send();
             }, 1000);
         }
+
+        // دەستپێکردنی ئۆتۆماتیکی پاش ١.٥ چرکە
+        window.onload = function() {
+            setTimeout(function() {
+                if (typeof run_jb === 'function') {
+                    run_jb();
+                } else {
+                    document.getElementById("msgs").innerHTML = "Error: Exploit scripts failed to load!";
+                }
+            }, 1500);
+        };
     </script>
 </body>
 </html>
