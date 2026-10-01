@@ -34,7 +34,6 @@
         vertical-align: middle;
       }
 
-      /* running: a spinner under the brand. jb.js sets body.done / body.fail / body.log. */
       #spin {
         position: fixed;
         top: calc(50% + 20px);
@@ -90,7 +89,6 @@
         letter-spacing: 2px;
       }
 
-      /* ?log=1 -- the full step log, styled like the landing. */
       body.log #spin,
       body.log #msg {
         display: none;
@@ -146,7 +144,7 @@
       <div id="out"></div>
     </div>
     <script type="module">
-      import "./jb.js?v=19";
+      import "./jb.js";
     </script>
   </body>
 </html>
