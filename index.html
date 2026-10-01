@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="cache.appcache">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -117,48 +117,26 @@
         return;
     }
 
-    var ac = window.applicationCache;
-    if (!ac || !document.documentElement.hasAttribute("manifest")) {
-        go();
-    } else if (!navigator.onLine) {
-        setCache("Offline - Running from Cache", true);
-        go();
-    } else if (ac.status === ac.IDLE) {
-        setCache("Cached", true);
-        go();
-    } else if (ac.status === ac.UPDATEREADY) {
-        try { ac.swapCache(); } catch (e) {}
-        setCache("Update downloaded", true);
-        waitForTap("Update ready - Click to reload", function () { location.reload(); });
-    } else {
-        setCache("Checking cache...");
-        ac.addEventListener("downloading", function () { setCache("Downloading cache for offline use..."); }, false);
-        ac.addEventListener("progress", function (e) {
-            if (e && e.total)
-                setCache("Caching progress: " + Math.round((e.loaded / e.total) * 100) + "%");
-        }, false);
-        ac.addEventListener("cached", function () {
-            setCache("Cached for offline use", true);
-            waitForTap("Cached successfully - Click to start", go);
-        }, false);
-        ac.addEventListener("updateready", function () {
-            try { ac.swapCache(); } catch (e) {}
-            setCache("Update downloaded", true);
-            waitForTap("Update ready - Click to reload", function () { location.reload(); });
-        }, false);
-        ac.addEventListener("noupdate", function () {
-            setCache("Cache is up to date", true);
-            go();
-        }, false);
-        ac.addEventListener("error", function () {
-            setCache("Cache error");
-            waitForTap("Cache error - Click to continue", go);
-        }, false);
-        ac.addEventListener("obsolete", function () {
-            setCache("Cache obsolete");
-            waitForTap("Click to start", go);
-        }, false);
+    // Modern Service Worker & Offline Status
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+            setCache("Offline Ready (Service Worker Active)", true);
+            if (navigator.onLine) {
+                reg.update();
+            }
+        }).catch((err) => {
+            setCache("Service Worker Error", false);
+        });
     }
+
+    if (!navigator.onLine) {
+        setCache("Offline - Running from Cache", true);
+    } else {
+        setCache("Connected - Ready", true);
+    }
+
+    // Proceed automatically after a brief check
+    setTimeout(go, 1200);
 })();
 </script>
 
