@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# v1.0 - Atari Sherwan Host
+
+CACHE:
+index.html
+jb.html
+core.js
+int64.js
+mem.js
+ps4_offsets.js
+jb.js
+rpc_worker.js
+goldhen.bin
+payload2.bin
+image.jpg
+
+NETWORK:
+*
