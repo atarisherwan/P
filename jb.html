@@ -1,3 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Atari Sherwan - Jailbreak</title>
+<style>
+  html, body { 
+      margin: 0; 
+      padding: 0; 
+      height: 100%;
+      background-image: url('image.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      background-color: rgba(11, 15, 25, 0.85);
+      background-blend-mode: overlay;
+  }
+  #wrap { 
+      padding-top: 20vh;
+  }
+  h2 { 
+      font-size: 26px; 
+      margin-bottom: 10px; 
+      color: #fff; 
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+  }
+  #state { 
+      font-size: 20px; 
+      font-weight: 700; 
+      margin: 0 0 10px; 
+      color: #00d2ff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+  }
+  #out {
+      width: 80%;
+      max-width: 600px;
+      height: 180px;
+      margin: 15px auto;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: left;
+      font-family: monospace;
+      font-size: 11px;
+      color: #8b95a3;
+      overflow-y: auto;
+      white-space: pre-wrap;
+  }
+  .ok { color: #7fd0a0; } 
+  .bad { color: #d08a7f; } 
+  .warn { color: #d8c07f; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <h2>Atari Sherwan - Jailbreak</h2>
+  <div id="state" class="warn">Initializing...</div>
+  <pre id="out"></pre>
+  <div id="msg"></div>
+</div>
+
+<script>
 (async function () {
     const log = (msg, cls) => {
         const state = document.getElementById("state");
@@ -57,3 +124,7 @@
         log("Error encountered: " + err.message, "bad");
     }
 })();
+</script>
+
+</body>
+</html>
