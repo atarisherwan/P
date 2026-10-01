@@ -1,9 +1,8 @@
 CACHE MANIFEST
-# Atari Sherwan Offline Cache v2.0
+# Atari Sherwan Offline Cache v2.1
 
 CACHE:
 ../index.html
-../jb.html
 ../core.js
 ../jb.js
 ../mem.js
@@ -13,17 +12,17 @@ CACHE:
 ../goldhen.bin
 ../payload2.bin
 ../image.jpg
-1000.bin
-1050.bin
-1100.bin
-1102.bin
-1150.bin
-1200.bin
-1250.bin
-1300.bin
-1302.bin
-1350.bin
-1352.bin
+patches/1000.bin
+patches/1050.bin
+patches/1100.bin
+patches/1102.bin
+patches/1150.bin
+patches/1200.bin
+patches/1250.bin
+patches/1300.bin
+patches/1302.bin
+patches/1350.bin
+patches/1352.bin
 
 NETWORK:
 *
