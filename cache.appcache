@@ -1,14 +1,14 @@
 CACHE MANIFEST
-# v1.2 - Atari Sherwan Host
+# Atari Sherwan v1.0
 
 CACHE:
 index.html
 jb.html
 core.js
-int64.js
-mem.js
-ps4_offsets.js
 jb.js
+mem.js
+int64.js
+ps4_offsets.js
 rpc_worker.js
 goldhen.bin
 payload2.bin
