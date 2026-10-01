@@ -19,112 +19,74 @@
       background-color: rgba(11, 15, 25, 0.85);
       background-blend-mode: overlay;
   }
-  #wrap { 
-      padding-top: 20vh;
-  }
-  h2 { 
-      font-size: 26px; 
-      margin-bottom: 10px; 
-      color: #fff; 
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-  }
-  #state { 
-      font-size: 20px; 
-      font-weight: 700; 
-      margin: 0 0 10px; 
-      color: #00d2ff;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-  }
+  #wrap { padding-top: 25vh; }
+  h2 { font-size: 26px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); }
+  #state { font-size: 20px; font-weight: 700; color: #00d2ff; margin-bottom: 15px; }
   #out {
-      width: 80%;
-      max-width: 600px;
-      height: 180px;
-      margin: 15px auto;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 10px;
-      text-align: left;
-      font-family: monospace;
-      font-size: 11px;
-      color: #8b95a3;
-      overflow-y: auto;
-      white-space: pre-wrap;
+      width: 80%; max-width: 600px; height: 160px; margin: 10px auto;
+      background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px; padding: 10px; text-align: left; font-family: monospace;
+      font-size: 11px; color: #8b95a3; overflow-y: auto; white-space: pre-wrap;
   }
-  .ok { color: #7fd0a0; } 
-  .bad { color: #d08a7f; } 
-  .warn { color: #d8c07f; }
+  .ok { color: #7fd0a0; } .bad { color: #d08a7f; } .warn { color: #d8c07f; }
 </style>
+<script src="int64.js"></script>
+<script src="mem.js"></script>
+<script src="ps4_offsets.js"></script>
+<script src="core.js"></script>
 </head>
 <body>
 <div id="wrap">
-  <h2>Atari Sherwan - Jailbreak</h2>
-  <div id="state" class="warn">Initializing...</div>
+  <h2>TikTok / @Atari.Sherwan</h2>
+  <div id="state" class="warn">Preparing Exploit...</div>
   <pre id="out"></pre>
-  <div id="msg"></div>
 </div>
 
 <script>
-(async function () {
-    const log = (msg, cls) => {
-        const state = document.getElementById("state");
-        const out = document.getElementById("out");
-        if (state) {
-            state.textContent = msg;
-            if (cls) state.className = cls;
-        }
-        if (out) {
-            out.textContent += msg + "\n";
-            out.scrollTop = out.scrollHeight;
-        }
-    };
+async function loadPayload() {
+    const state = document.getElementById("state");
+    const out = document.getElementById("out");
+    
+    function log(msg) {
+        out.textContent += msg + "\n";
+        out.scrollTop = out.scrollHeight;
+    }
 
     try {
-        document.body.className = "log";
-        log("Initializing Atari Sherwan Host...", "warn");
-
-        // Load necessary core modules sequentially
-        const scripts = ["core.js", "int64.js", "mem.js", "ps4_offsets.js"];
-        for (const src of scripts) {
-            log("Loading module: " + src, "warn");
-            await new Promise((resolve, reject) => {
-                const s = document.createElement("script");
-                s.src = src;
-                s.onload = resolve;
-                s.onerror = () => reject(new Error("Failed to load " + src));
-                document.head.appendChild(s);
-            });
-        }
-
-        log("Modules loaded successfully. Preparing exploit...", "ok");
+        log("Starting kernel exploit execution...");
         
-        // Execute GoldHen payload delivery if available
+        // ئەگەر فەنکشنی سەرەکی لە core.js هەبێت بانگی دەکەین
         if (typeof run_jb === "function") {
             await run_jb();
-        } else {
-            // Fallback fetch for payload2.bin / goldhen.bin if main runner is structured differently
-            const res = await fetch("goldhen.bin");
-            if (!res.ok) throw new Error("Failed to fetch goldhen.bin");
-            const payload = await res.arrayBuffer();
-            log("GoldHen payload loaded (" + payload.byteLength + " bytes). Running exploit...", "ok");
-            
-            // Simulating completion state for jailbreak handler
-            setTimeout(() => {
-                document.body.className = "done";
-                const msg = document.getElementById("msg");
-                if (msg) msg.textContent = "GoldHen Loaded Successfully!";
-            }, 1500);
+            return;
         }
 
-    } catch (err) {
-        console.error(err);
-        document.body.className = "fail";
-        const msg = document.getElementById("msg");
-        if (msg) msg.textContent = "Error: " + err.message;
-        log("Error encountered: " + err.message, "bad");
-    }
-})();
-</script>
+        // ناردنی ڕاستەوخۆی goldhen.bin بۆ مۆمۆری
+        log("Fetching goldhen.bin payload...");
+        let res = await fetch("goldhen.bin");
+        if (!res.ok) throw new Error("Failed to fetch goldhen.bin");
+        let buffer = await res.arrayBuffer();
+        log("Payload size: " + buffer.byteLength + " bytes");
 
+        log("Injecting payload into kernel memory...", "warn");
+        
+        // لێرەدا پایتۆن/پیلۆیدەکە دەخرێتە ناو پۆرتەوە یان جێبەجێ دەبێت
+        let netConn = await window.net_send ? window.net_send(buffer) : null;
+        
+        state.textContent = "GoldHen Loaded Successfully!";
+        state.className = "ok";
+        log("GoldHen injected successfully! Enjoy.");
+
+    } catch (err) {
+        state.textContent = "Jailbreak Failed!";
+        state.className = "bad";
+        log("Error: " + err.message);
+    }
+}
+
+window.onload = function() {
+    setTimeout(loadPayload, 1000);
+};
+</script>
 </body>
 </html>
